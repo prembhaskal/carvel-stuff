@@ -1,0 +1,17 @@
+#@ load("@ytt:data", "data")
+
+---
+#@ appName=data.values.app.name
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: #@ appName
+spec:
+  template:
+    spec:
+      containers:
+        - name: busybox
+          image: docker.io/library/busybox:1.36
+          command: ["sh", "-c", "for i in $(seq 30); do echo $i; sleep 1; done"]
+      restartPolicy: Never
+  backoffLimit: 4 
