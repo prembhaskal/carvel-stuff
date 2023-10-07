@@ -1,0 +1,33 @@
+#! variables that need to be externally configurable
+#! are specified in a data values schema file
+
+#@ load("@ytt:data", "data")
+#@ appname=data.values.app.name
+---
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: #@ appname + ".corp.com.1.0.0"
+  #! sleep-app.corp.com.1.0.0
+spec:
+  refName: #@ appname + ".corp.com"
+  version: 1.0.0
+  releaseNotes: |
+    Initial release of the sleep app package
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: docker-registry.registry.svc.cluster.local:5000/packages/sleep-app@sha256:f328ecf16a91297e4c08b0967cf7798f19381d4620f27a950312fd0ed0d5b451
+      template:
+      - ytt:
+          inline:
+            pathsFrom:
+            - secretRef:
+                name: #@ appname + "-values"
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-' 
+      deploy:
+      - kapp: {}

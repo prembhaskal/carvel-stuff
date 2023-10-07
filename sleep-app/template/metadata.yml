@@ -1,0 +1,13 @@
+#@ load("@ytt:data", "data")
+#@ appname=data.values.app.name
+---
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: #@ appname + ".corp.com"
+spec:
+  displayName: #@ appname
+  longDescription: "Sleep App to test reconcile time"
+  shortDescription: "Sleep App for test"
+  categories:
+    - demo

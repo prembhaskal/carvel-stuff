@@ -1,0 +1,18 @@
+#@ load("@ytt:data", "data")
+
+#@ for idx in range(0, data.values.count):
+---
+#@ appidx = idx + 1
+#@ pkgname=data.values.app.name + str(appidx)
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: #@ pkgname
+  namespace: sleeptest
+spec:
+  serviceAccountName: sleeptest-sa
+  packageRef:
+    refName: #@ pkgname + ".corp.com"
+    versionSelection:
+      constraints: 1.0.0
+#@ end

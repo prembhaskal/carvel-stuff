@@ -1,0 +1,5 @@
+#@ load("@ytt:data", "data")
+
+---
+app:
+  name: #@ data.values.app.name
