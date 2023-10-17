@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build java-app --file java-app/Dockerfile --tag bpremkumar532/simple-java-app:1.0.0
+      run: docker build java-app --file ./java-app/Dockerfile --tag bpremkumar532/simple-java-app:1.0.0
     - name: Login to DockerHub
       if: github.event_name != 'pull_request'
       uses: docker/login-action@v1 
