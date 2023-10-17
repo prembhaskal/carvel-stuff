@@ -16,19 +16,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-nodejs-gke
+  name: simple-nodejs-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello
+      app: simple-nodejs-app
   template:
     metadata:
       labels:
-        app: hello
+        app: simple-nodejs-app
     spec:
       containers:
-      - name: hello-app
+      - name: nodejs-app
         # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
         # Replace $GCLOUD_PROJECT with your project ID.
         image: bpremkumar532/simple-nodejs-app:latest

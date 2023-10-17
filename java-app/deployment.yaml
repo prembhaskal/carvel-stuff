@@ -16,22 +16,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-gke
+  name: simple-java-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello
+      app: simple-java-app
   template:
     metadata:
       labels:
-        app: hello
+        app: simple-java-app
     spec:
       containers:
-      - name: hello-app
+      - name: java-app
         # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
         # Replace $GCLOUD_PROJECT with your project ID.
-        image: us-central1-docker.pkg.dev/cf-k8s-lifecycle-tooling-klt/hello-repo/helloworld-java-gke:latest
+        image: docker.io/bpremkumar532/simple-java-app:latest
         # This app listens on port 8080 for web traffic by default.
         ports:
         - containerPort: 8080

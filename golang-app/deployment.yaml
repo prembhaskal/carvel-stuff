@@ -16,19 +16,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-gke
+  name: simple-go-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello
+      app: simple-go-app
   template:
     metadata:
       labels:
-        app: hello
+        app: simple-go-app
     spec:
       containers:
-      - name: hello-app
+      - name: go-app
         # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
         # Replace $GCLOUD_PROJECT with your project ID.
         #image: us-central1-docker.pkg.dev/cf-k8s-lifecycle-tooling-klt/hello-repo/helloworld-gke:latest
