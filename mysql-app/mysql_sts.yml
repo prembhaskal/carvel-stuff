@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+data:
+  init-db.sql: |+
+    CREATE DATABASE IF NOT EXISTS my_database;
+    USE my_database;
+
+    CREATE TABLE IF NOT EXISTS users (
+      id INT NOT NULL AUTO_INCREMENT,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      PRIMARY KEY (id)
+    );
+
+    INSERT INTO users (name, email) VALUES
+      ('John Doe', 'john.doe@example.com'),
+      ('Jane Doe', 'jane.doe@example.com'),
+      ('Peter Parker', 'peter.parker@example.com');
+kind: ConfigMap
+metadata:
+  name: mysql-init-db
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password123"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+        volumeMounts:
+        - name: mysql-init-db
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: mysql-data
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+      - name: mysql-init-db
+        configMap:
+          name: mysql-init-db
+
