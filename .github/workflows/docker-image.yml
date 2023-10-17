@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build nodejs-app --file Dockerfile --tag bpremkumar532/simple-nodejs-app:1.0.0
+      run: docker build nodejs-app --file ./nodejs-app/Dockerfile --tag bpremkumar532/simple-nodejs-app:1.0.0
     - name: Login to DockerHub
       if: github.event_name != 'pull_request'
       uses: docker/login-action@v1 
