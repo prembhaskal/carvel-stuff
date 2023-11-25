@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imgpkg-pull
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imgpkg-pull
+  template:
+    metadata:
+      labels:
+        app: imgpkg-pull
+    spec:
+      containers:
+        - name: imgpkg-pull
+          image: docker.io/prembhaskal/ubuntu-imgpkg:1.0
+          imagePullPolicy: Always
