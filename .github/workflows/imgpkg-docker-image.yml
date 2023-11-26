@@ -28,4 +28,4 @@ jobs:
         context: ./imgpkg-app
         push: ${{ github.event_name != 'pull_request' }}
         tags: bpremkumar532/ubuntu-imgpkg
-        labels: latest
+        labels: 1.0
