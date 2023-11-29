@@ -27,7 +27,7 @@ metadata:
   name: mysql-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
@@ -41,7 +41,7 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
